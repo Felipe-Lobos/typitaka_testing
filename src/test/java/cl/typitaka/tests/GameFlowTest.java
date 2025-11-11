@@ -1,19 +1,26 @@
 package cl.typitaka.tests;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import cl.typitaka.pages.GamePage;
 import cl.typitaka.pages.OptionsPage;
 
-public class GameFlowTest extends BaseTest{
+public class GameFlowTest extends BaseTest {
+    List<String> wordsList;
+
     @Test
-    @DisplayName("Test a los botones de opciones")
-    public void testOptionButtons() {
-        //driver viene desde la clase abstracta BaseTest, que su vez viene de DriverFactory
-        OptionsPage optionPage = new OptionsPage(driver);
-        optionPage.selectGameMode("Time");
-        optionPage.selectWordsType("Spanish");
-        optionPage.selectWordsType("Romaji");
+    @DisplayName("Test a las palabras del juego")
+    public void testGameFlow(){
+        OptionsPage optionsPage = new OptionsPage(driver);
+        GamePage gamePage = new GamePage(driver);
+        wordsList = gamePage.getWordsList();
+        
+        for (String word : wordsList) {
+            gamePage.typeOnInput(word);
+            gamePage.typeOnInput(" ");
+        }
 
     }
 }

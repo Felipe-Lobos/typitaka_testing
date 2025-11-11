@@ -1,31 +1,30 @@
 package cl.typitaka.pages;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class GamePage {
-    WebDriver driver;
+public class GamePage extends BasePage {
 
     public GamePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     private By wordsWrapperLocator = By.className("words-wrapper");
-    private WebElement wordsWrapper;
-    private List<WebElement> wordElements;
-    private List<String> wordTextList;
+    private By inputLocator = By.id("word-input");
+    private By timerDisplayLocator = By.cssSelector(".timer-option-display>span");
+    private By wordDisplayLocator = By.cssSelector(".word-option-display>span");
+
+
+    private WebElement getWordsWrapper(){
+        return safeFindElement(wordsWrapperLocator);
+    }
 
     private List<WebElement> getWordElements() {
-        // Asegurarse de tener el contenedor actualizado antes de buscar las palabras
-        if (wordsWrapper == null) {
-            wordsWrapper = driver.findElement(wordsWrapperLocator);
-        }
-        return wordsWrapper.findElements(By.className("word"));
+        return getWordsWrapper().findElements(By.className("word"));
     }
 
     private String extractWordText(WebElement wordElement) {
@@ -43,9 +42,36 @@ public class GamePage {
                 .collect(Collectors.toList());
     }
 
-    public void updateWordsList(){
-        this.wordTextList = getWordTexts();
+   
+
+    public List<String> getWordsList() {
+        return getWordTexts();
     }
-    
+
+    public void focusWordInput() {
+        WebElement wordInput = safeFindElement(inputLocator);
+        wordInput.click();
+    }
+
+    public void typeOnInput(String word) {
+        WebElement wordInput = safeFindElement(inputLocator);
+        wordInput.sendKeys(word);
+    }
+
+    public boolean isTimerDisplayVisible() {
+        return safeFindElement(timerDisplayLocator).isDisplayed();
+    }
+
+    public boolean isWordDisplayVisible() {
+        return safeFindElement(wordDisplayLocator).isDisplayed();
+    }
+
+    public String getTimerDisplayText() {
+        return safeFindElement(timerDisplayLocator).getText();
+    }
+
+    public String getWordDisplayText() {
+        return safeFindElement(wordDisplayLocator).getText();
+    }
 
 }

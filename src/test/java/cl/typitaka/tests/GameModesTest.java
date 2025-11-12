@@ -45,11 +45,11 @@ public class GameModesTest extends BaseTest{
 
     @ParameterizedTest
     @MethodSource("gameConfigsCombination")
-    @DisplayName("Verificar que el juego cambien entre modo 'Words' y 'Time'")
+    @DisplayName("Verificar que el timer o el contador entre modo 'Words' y 'Time' se actualicen")
     public void TestSelectGameMode_gameDisplayShouldUpdate(String language, String gameMode, String suboption){
         optionsPage = new OptionsPage(driver);
         gamePage = new GamePage(driver);
-        
+    
         optionsPage.selectWordsType(language);
         optionsPage.selectGameMode(gameMode);
         optionsPage.selectGameModeSuboption(suboption);

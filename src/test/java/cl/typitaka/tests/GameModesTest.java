@@ -38,6 +38,7 @@ public class GameModesTest extends BaseTest{
         optionsPage.selectWordsType("English");
         List<String> wordList = gamePage.getWordsList();
         optionsPage.selectWordsType("Spanish");
+        gamePage.waitForWordsToChange(wordList);
         List<String> updatedWordList = gamePage.getWordsList();
 
         assertNotEquals(wordList, updatedWordList,"La lista de palabras siguen siendo las mismas");

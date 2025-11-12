@@ -12,9 +12,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class BasePage {
     protected WebDriver driver;
     private final int MAX_RETRIES = 3; // Numero maximos de intentos
-
+    protected WebDriverWait wait;
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     /**
@@ -27,7 +28,6 @@ public abstract class BasePage {
     protected WebElement safeFindElement(By locator) {
         for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
             try {
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
                 wait.until(ExpectedConditions.presenceOfElementLocated(locator));
                 return driver.findElement(locator);
             } catch (StaleElementReferenceException e) {

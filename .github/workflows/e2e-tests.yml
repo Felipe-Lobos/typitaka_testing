@@ -33,3 +33,17 @@ jobs:
       # 2. Ejecutar las pruebas, pasando la URL de la aplicación como parámetro
       - name: Run Selenium Tests
         run: mvn test -Dapp.url=${{ env.APP_URL }}
+
+      # ----------------------------------------------------
+      # PASO CLAVE: Uso de dorny/test-reporter
+      # ----------------------------------------------------
+      - name: Publish Test Report to GitHub Action Summary (Dorny)
+        uses: dorny/test-reporter@v1
+        # CRUCIAL: Ejecuta este paso incluso si 'mvn test' falló
+        if: always() 
+        with:
+          name: Resumen de Pruebas E2E (Dorny)
+          # Asegúrate de que esta ruta sea correcta para los XML de Surefire:
+          path: target/surefire-reports/*.xml 
+          reporter: junit 
+          fail-on-error: true

@@ -46,15 +46,21 @@ jobs:
         run: mvn test -Dapp.url=${{ env.APP_URL }}
 
       # --------------------------------------------
-      # GENERAR REPORTES ALLURE
+      # INSTALL ALLURE CLI (sin docker)
       # --------------------------------------------
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: target/allure-results
-          allure_report: target/allure-report
+      - name: Download Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
+          tar -xvf allure-2.27.0.tgz
+          sudo mv allure-2.27.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
+      # Generate Allure Report
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          allure generate target/allure-results -o target/allure-report --clean
+          
       # --------------------------------------------
       # PUBLICAR EL REPORTE EN GITHUB PAGES
       # --------------------------------------------

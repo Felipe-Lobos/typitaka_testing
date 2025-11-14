@@ -55,11 +55,11 @@ jobs:
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
-      # Generate Allure Report
+      # Generate Allure Report (relative paths for GitHub Pages)
       - name: Generate Allure Report
         if: always()
         run: |
-          allure generate target/allure-results -o target/allure-report --clean
+          allure generate target/allure-results -o target/allure-report --clean -p
 
       # --------------------------------------------
       # PUBLICAR EL REPORTE EN GITHUB PAGES

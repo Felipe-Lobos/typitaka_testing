@@ -56,11 +56,11 @@
         </dependency>
 
         <!-- Allure Java Commons -->
-        <dependency>
+        <!-- <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
             <version>${allure.version}</version>
-        </dependency>
+        </dependency> -->
 
     </dependencies>
     <build>

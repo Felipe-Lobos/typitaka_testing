@@ -1,50 +1,66 @@
-# .github/workflows/e2e-tests.yml (Repo A - Pruebas)
-
-name: E2E Tests from Deployment
+name: E2E Tests with Allure Report
 
 on:
-  # Escucha el evento disparado desde el otro repositorio
+  # Evento enviado desde tu otro repositorio (Vite deploy)
   repository_dispatch:
     types: [run_e2e_tests]
 
 jobs:
   e2e-test:
     runs-on: ubuntu-latest
+
     steps:
+      # --------------------------------------------
+      # CHECKOUT DEL REPO DE TESTS
+      # --------------------------------------------
       - name: Checkout Test Code
         uses: actions/checkout@v4
-        
-      # Opcional: Extrae la URL de la carga útil del cliente
+
+      # --------------------------------------------
+      # RECIBIR LA URL DESDE EL DEPLOY DEL OTRO REPO
+      # --------------------------------------------
       - name: Set App URL
         id: set_url
         run: echo "APP_URL=${{ github.event.client_payload.app_url }}" >> $GITHUB_ENV
-        
-      # 1. Instalar dependencias (Maven, Gradle, etc.)
+
+      # --------------------------------------------
+      # INSTALAR JAVA
+      # --------------------------------------------
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
+          distribution: "temurin"
+          java-version: "21"
+          cache: "maven"
 
-          java-version: '21' 
-          # Asegúrate de que tu pom.xml también apunte a 21 si es necesario.
-          # Si tienes dependencia con Maven, es buena práctica añadir el cache
-          cache: maven
-          
-      # 2. Ejecutar las pruebas, pasando la URL de la aplicación como parámetro
+      # --------------------------------------------
+      # INSTALAR DEPENDENCIAS DEL PROYECTO
+      # --------------------------------------------
+      - name: Install dependencies
+        run: mvn -B clean install -DskipTests
+
+      # --------------------------------------------
+      # EJECUTAR LOS TESTS DE SELENIUM
+      # --------------------------------------------
       - name: Run Selenium Tests
         run: mvn test -Dapp.url=${{ env.APP_URL }}
 
-      # ----------------------------------------------------
-      # PASO CLAVE: Uso de dorny/test-reporter
-      # ----------------------------------------------------
-      - name: Publish Test Report to GitHub Action Summary (Dorny)
-        # 1. ACTUALIZA A LA VERSIÓN V2
-        uses: dorny/test-reporter@v2
-        # CRUCIAL: Ejecuta este paso incluso si 'mvn test' falló
-        if: always() 
+      # --------------------------------------------
+      # GENERAR REPORTES ALLURE
+      # --------------------------------------------
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
         with:
-          name: Resumen de Pruebas E2E (Dorny)
-          # Asegúrate de que esta ruta sea correcta para los XML de Surefire:
-          path: target/surefire-reports/*.xml 
-          reporter: java-junit 
-          fail-on-error: true
+          allure_results: target/allure-results
+          allure_report: target/allure-report
+
+      # --------------------------------------------
+      # PUBLICAR EL REPORTE EN GITHUB PAGES
+      # --------------------------------------------
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/allure-report

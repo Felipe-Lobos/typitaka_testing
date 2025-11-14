@@ -54,58 +54,53 @@
             <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Allure Java Commons -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
-            <!-- Para ejecutar pruebas con JUnit 5 -->
+            <!-- JUnit 5 + Allure listener -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <systemPropertyVariables>
-                        <app.url>${app.url}</app.url>
-                    </systemPropertyVariables>
                     <useSystemClassLoader>false</useSystemClassLoader>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-
-                    <!-- Configuracion para Allure Reports -->
                     <properties>
                         <property>
                             <name>listener</name>
                             <value>io.qameta.allure.junit5.AllureJunit5</value>
                         </property>
                     </properties>
-                    <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                    </systemPropertyVariables>
-
-                    <!--  Configuracion para reportes de maven nativos
-                    <useFile>true</useFile>
-                    <reportFormat>xml</reportFormat>
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> -->
                 </configuration>
             </plugin>
-            <!-- Plugin de allure reports -->
+
+            <!-- Maven Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin oficial para generar reportes Allure -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.12.0</version>
                 <configuration>
-                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <!-- <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.2.5</version>
-            </plugin>
-        </plugins>
-    </reporting> -->
 </project>

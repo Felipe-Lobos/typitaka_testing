@@ -46,5 +46,5 @@ jobs:
           name: Resumen de Pruebas E2E (Dorny)
           # Asegúrate de que esta ruta sea correcta para los XML de Surefire:
           path: target/surefire-reports/*.xml 
-          reporter: jest-junit 
+          reporter: java-junit 
           fail-on-error: true

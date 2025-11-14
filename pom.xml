@@ -14,7 +14,7 @@
     <url>https://felipe-lobos.github.io/typitaka</url>
 
     <properties>
-        <app.url>https://felipe-lobos.github.io/typitaka</app.url>
+        <!-- <app.url>https://felipe-lobos.github.io/typitaka</app.url> -->
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +71,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <app.url>${app.url}</app.url>
+                    </systemPropertyVariables>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <properties>
                         <property>
@@ -103,4 +106,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- PERFIL POR DEFECTO: URL DEPLOYED (GitHub Pages) -->
+        <profile>
+            <id>gh-pages</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <app.url>https://felipe-lobos.github.io/typitaka/</app.url>
+            </properties>
+        </profile>
+
+        <!-- PERFIL LOCAL -->
+        <profile>
+            <id>local</id>
+            <properties>
+                <app.url>http://localhost:5173</app.url>
+            </properties>
+        </profile>
+    </profiles>
 </project>

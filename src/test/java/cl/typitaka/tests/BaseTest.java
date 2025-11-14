@@ -19,7 +19,7 @@ public abstract class BaseTest {
             APP_URL = urlFromMaven;
         } else {
             // Valor de seguridad si no se configura nada y la propiedad Maven falla
-            APP_URL = "http://localhost:3000";
+            APP_URL = "http://localhost:5173";
         }
         System.out.println("DEBUG: Usando URL de la Aplicación: " + APP_URL);
     }

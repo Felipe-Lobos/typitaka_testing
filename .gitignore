@@ -2,6 +2,7 @@
 
 #Reporter build
 .allure
+allure-results/
 
 # Maven build
 /target/

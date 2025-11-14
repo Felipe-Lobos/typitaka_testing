@@ -38,7 +38,8 @@ jobs:
       # PASO CLAVE: Uso de dorny/test-reporter
       # ----------------------------------------------------
       - name: Publish Test Report to GitHub Action Summary (Dorny)
-        uses: dorny/test-reporter@v1
+        # 1. ACTUALIZA A LA VERSIÓN V2
+        uses: dorny/test-reporter@v2
         # CRUCIAL: Ejecuta este paso incluso si 'mvn test' falló
         if: always() 
         with:

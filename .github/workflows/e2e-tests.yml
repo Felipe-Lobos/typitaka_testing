@@ -58,10 +58,15 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       # Generate Allure Report (relative paths for GitHub Pages)
+      # Con validacion en caso de que allure no quede bien instalado
       - name: Generate Allure Report
-        if: always()
+        if: success() || failure()
         run: |
-          allure generate target/allure-results -o target/allure-report --clean -p
+          if command -v allure; then
+            allure generate target/allure-results -o target/allure-report --clean -p
+          else
+            echo "⚠️ Allure no está instalado, no se generará el reporte."
+          fi
 
       # --------------------------------------------
       # PUBLICAR EL REPORTE EN GITHUB PAGES

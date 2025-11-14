@@ -24,7 +24,11 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
-          java-version: '17'
+
+          java-version: '21' 
+          # Asegúrate de que tu pom.xml también apunte a 21 si es necesario.
+          # Si tienes dependencia con Maven, es buena práctica añadir el cache
+          cache: maven
           
       # 2. Ejecutar las pruebas, pasando la URL de la aplicación como parámetro
       - name: Run Selenium Tests

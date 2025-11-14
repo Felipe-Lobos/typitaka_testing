@@ -1,5 +1,8 @@
 # .gitignore - Ignorar archivos comunes para proyecto Maven + Selenium
 
+#Reporter build
+.allure
+
 # Maven build
 /target/
 /out/

@@ -11,7 +11,7 @@
 
     <name>typitaka_testing</name>
     <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>https://felipe-lobos.github.io/typitaka</url>
 
     <properties>
         <app.url>https://felipe-lobos.github.io/typitaka</app.url>
@@ -21,6 +21,7 @@
         <junit.jupiter.version>5.10.3</junit.jupiter.version>
         <selenium.version>4.25.0</selenium.version>
         <webdrivermanager.version>5.9.2</webdrivermanager.version>
+        <allure.version>2.27.0</allure.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,14 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Allure Junit5 -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -61,8 +70,42 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+
+                    <!-- Configuracion para Allure Reports -->
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
+                    </properties>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+
+                    <!--  Configuracion para reportes de maven nativos
+                    <useFile>true</useFile>
+                    <reportFormat>xml</reportFormat>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> -->
+                </configuration>
+            </plugin>
+            <!-- Plugin de allure reports -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    <!-- <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+        </plugins>
+    </reporting> -->
 </project>

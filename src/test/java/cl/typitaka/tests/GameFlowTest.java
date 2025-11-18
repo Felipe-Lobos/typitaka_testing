@@ -1,5 +1,7 @@
 package cl.typitaka.tests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,5 +24,11 @@ public class GameFlowTest extends BaseTest {
             gamePage.typeOnInput(" ");
         }
 
+    }
+
+    @Test
+    @DisplayName("Test de prueba para screenshots")
+    public void testScreenshot(){
+        assertTrue(false);
     }
 }

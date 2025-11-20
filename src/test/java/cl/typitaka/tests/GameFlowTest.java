@@ -6,8 +6,9 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import cl.typitaka.pages.GamePage;
-import cl.typitaka.pages.OptionsPage;
+import cl.typitaka.pages.views.GameView;
+
+
 
 public class GameFlowTest extends BaseTest {
     List<String> wordsList;
@@ -15,13 +16,12 @@ public class GameFlowTest extends BaseTest {
     @Test
     @DisplayName("Test a las palabras del juego")
     public void testGameFlow(){
-        OptionsPage optionsPage = new OptionsPage(driver);
-        GamePage gamePage = new GamePage(driver);
-        wordsList = gamePage.getWordsList();
+        GameView gameView = new GameView(driver);
+        wordsList = gameView.getGameSection().getWordsList();
         
         for (String word : wordsList) {
-            gamePage.typeOnInput(word);
-            gamePage.typeOnInput(" ");
+            gameView.getGameSection().typeOnWordInput(word);
+            gameView.getGameSection().typeOnWordInput(" ");
         }
 
     }

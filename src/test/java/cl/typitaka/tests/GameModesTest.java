@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import cl.typitaka.pages.GamePage;
 import cl.typitaka.pages.OptionsPage;
+import cl.typitaka.pages.views.GameView;
 
 public class GameModesTest extends BaseTest{
     OptionsPage optionsPage;
@@ -32,16 +33,26 @@ public class GameModesTest extends BaseTest{
     @Test
     @DisplayName("Verificar que las palabras cambien al seleccionar un idioma")
     public void testSelectLanguage_wordsListShouldUpdate(){
-        optionsPage = new OptionsPage(driver);
-        gamePage = new GamePage(driver);
+        // optionsPage = new OptionsPage(driver);
+        // gamePage = new GamePage(driver);
         
-        optionsPage.selectWordsType("English");
-        List<String> wordList = gamePage.getWordsList();
-        optionsPage.selectWordsType("Spanish");
-        gamePage.waitForWordsToChange(wordList);
-        List<String> updatedWordList = gamePage.getWordsList();
+        // optionsPage.selectWordsType("English");
+        // List<String> wordList = gamePage.getWordsList();
+        // optionsPage.selectWordsType("Spanish");
+        // gamePage.waitForWordsToChange(wordList);
+        // List<String> updatedWordList = gamePage.getWordsList();
+
+        // assertNotEquals(wordList, updatedWordList,"La lista de palabras siguen siendo las mismas");
+        GameView gameView = new GameView(driver);
+        gameView.getOptionComponent().selectWordsType("English");
+        gameView.getGameSection().waitForWordsToUpdate();
+        List<String> wordList = gameView.getGameSection().getWordsList();
+        gameView.getOptionComponent().selectWordsType("Spanish");
+        gameView.getGameSection().waitForWordsToUpdate();
+        List<String> updatedWordList = gameView.getGameSection().getWordsList();
 
         assertNotEquals(wordList, updatedWordList,"La lista de palabras siguen siendo las mismas");
+
     }
 
     @ParameterizedTest

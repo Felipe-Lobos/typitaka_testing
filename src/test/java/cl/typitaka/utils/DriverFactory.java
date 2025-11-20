@@ -6,6 +6,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class DriverFactory {
     private static WebDriver driver;
 
@@ -24,6 +27,7 @@ public class DriverFactory {
             // D. Desactivar barras de información (para evitar que interfieran con los
             // clics)
             chromeOptions.addArguments("--disable-infobars");
+
             driver = new ChromeDriver(chromeOptions);
         }
         return driver;

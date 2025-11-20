@@ -1,6 +1,7 @@
 package cl.typitaka.utils;
 
 import cl.typitaka.utils.ScreenshotHelper;
+import io.qameta.allure.Allure;
 
 import java.util.Optional;
 
@@ -29,9 +30,21 @@ public class TestListener implements AfterTestExecutionCallback  {
             WebDriver driver = BaseTest.getDriver();
             String testName = context.getDisplayName();
             ScreenshotHelper.captureScreenshot(driver, "FALLO - " + testName);
+            attachHtmlSource(driver, "Página Fuente al Fallo");
         } else {
             // El test pasó
             System.out.println("Test exitoso!");
+        }
+    }
+
+
+    // Método auxiliar para adjuntar HTML (usando Allure.addAttachment)
+    private void attachHtmlSource(WebDriver driver, String name) {
+        try {
+            String source = driver.getPageSource();
+            Allure.addAttachment(name, "text/html", source, "html");
+        } catch (Exception ignored) {
+            // Ignorar errores si el driver ya está cerrado
         }
     }
 }

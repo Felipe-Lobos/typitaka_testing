@@ -6,9 +6,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class DriverFactory {
     private static WebDriver driver;
 

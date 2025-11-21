@@ -1,6 +1,5 @@
 package cl.typitaka.utils;
 
-import cl.typitaka.utils.ScreenshotHelper;
 import io.qameta.allure.Allure;
 
 import java.util.Optional;

@@ -8,7 +8,7 @@ public class ScoreSection extends BasePage {
 
     public ScoreSection(WebDriver driver) {
         super(driver);
-        //TODO Auto-generated constructor stub
     }
+    
     
 }

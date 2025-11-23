@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"48f5b11f2172a8b23d9b08c1e904fe4a","name":"cl.typitaka.tests.GameFlowTest","statistic":{"failed":1,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":2}},{"uid":"502cdc82377ecf28e13901954ec6ece4","name":"cl.typitaka.tests.GameModesTest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":6,"unknown":0,"total":6}}]}
